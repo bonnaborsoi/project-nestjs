@@ -1,4 +1,4 @@
-import { IsNumber, Min, IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import { IsNumber, IsNotEmpty, IsString, IsUrl, Min } from 'class-validator';
 
 export class ProductDTO {
 
