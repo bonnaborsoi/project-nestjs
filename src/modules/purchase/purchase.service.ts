@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PurchaseDTO } from './dto/purchase.dto'
 import { PrismaService } from 'src/database/PrismaService';
-import { v4 as uuidv4 } from 'uuid';
-
 
 @Injectable()
 export class PurchaseService {
@@ -40,5 +38,4 @@ export class PurchaseService {
           });
         }
     }
-
 }
