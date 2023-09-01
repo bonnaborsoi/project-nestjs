@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PurchaseDTO } from './dto/purchase.dto'
 import { PrismaService } from 'src/database/PrismaService';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class PurchaseService {
@@ -9,7 +10,7 @@ export class PurchaseService {
 
     async processPurchase(purchaseData: PurchaseDTO[]) {
         for (const purchase of purchaseData) {
-          await this.updateProductStock(purchase.productId, purchase.quantity);
+            await this.updateProductStock(purchase.productId, purchase.quantity);
         }
 
         return {
@@ -36,16 +37,17 @@ export class PurchaseService {
         if (product) {
             const updatedQuantity = product.quantity - purchasedQuantity;
 
-            if (updatedQuantity < 0){
-                throw new Error("Product has only " + product.quantity + " in stock");
+            // delete this condition
+            if (purchasedQuantity <= 0){
+                throw new Error("You cannot enter a non positive number: " + purchasedQuantity + " (productId: " + productId + ")");
+            }
+            
+            if (product.quantity == 0){
+                throw new Error("Product out of stock");
             }
 
-            else if (updatedQuantity == 0){ 
-                await this.prisma.product.delete({
-                    where : {
-                        id: productId,
-                    }
-                })
+            else if (updatedQuantity < 0){ // When product.quantity is less than purchasedQuantity
+                throw new Error("Insufficient amount in stock. There are only " + product.quantity + " of this product in stock");
             }
 
             else{
@@ -56,7 +58,6 @@ export class PurchaseService {
                     data: { quantity: updatedQuantity },
                 });
             }
-
         }
     }
 }
