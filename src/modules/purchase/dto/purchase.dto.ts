@@ -1,4 +1,4 @@
-import { IsNumber, Min, IsNotEmpty } from 'class-validator';
+import { IsNumber, Min, IsNotEmpty} from 'class-validator';
 
 export class PurchaseDTO {
 

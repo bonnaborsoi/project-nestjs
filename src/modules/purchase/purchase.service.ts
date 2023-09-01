@@ -11,6 +11,10 @@ export class PurchaseService {
         for (const purchase of purchaseData) {
           await this.updateProductStock(purchase.productId, purchase.quantity);
         }
+
+        return {
+            message: 'Purchase completed successfully!'
+        }
     }
 
     // Exception handler
@@ -25,17 +29,34 @@ export class PurchaseService {
         }
         return product;
     }
-      
+
     async updateProductStock(productId: number, purchasedQuantity: number) {
         const product = await this.checkProductExistence(productId);
       
         if (product) {
-          const updatedQuantity = product.quantity - purchasedQuantity;
+            const updatedQuantity = product.quantity - purchasedQuantity;
 
-          await this.prisma.product.update({
-            where: { id: productId },
-            data: { quantity: updatedQuantity },
-          });
+            if (updatedQuantity < 0){
+                throw new Error("Product has only " + product.quantity + " in stock");
+            }
+
+            else if (updatedQuantity == 0){ 
+                await this.prisma.product.delete({
+                    where : {
+                        id: productId,
+                    }
+                })
+            }
+
+            else{
+                await this.prisma.product.update({
+                    where : { 
+                        id: productId 
+                    },
+                    data: { quantity: updatedQuantity },
+                });
+            }
+
         }
     }
 }
