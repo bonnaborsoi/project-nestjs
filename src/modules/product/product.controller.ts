@@ -2,10 +2,10 @@ import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common'
 import { ProductService } from './product.service';
 import { ProductDTO } from './dto/product.dto';
 import { ParseIntPipe } from '@nestjs/common';
-import { threadId } from 'worker_threads';
 
 @Controller('product')
 export class ProductController {
+  
   constructor(private readonly productService: ProductService) {}
 
   @Post()

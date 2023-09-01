@@ -4,6 +4,7 @@ import { PrismaService } from 'src/database/PrismaService';
 
 @Injectable()
 export class ProductService {
+    
     constructor(private prisma : PrismaService) {}
 
     // helper function
