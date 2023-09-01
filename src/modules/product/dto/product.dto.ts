@@ -1,6 +1,8 @@
 import { IsNumber, Min, IsNotEmpty, IsString, IsUrl } from 'class-validator';
 
 export class ProductDTO {
+
+  @IsNotEmpty({ message: "Id cannot be empty" })
   @IsNumber()
   @Min(0, { message: "Id must be greater than or equal to 0" })
   id: number;
@@ -14,10 +16,11 @@ export class ProductDTO {
   @Min(1, { message: "Id must be greater than or equal to 1" })
   price: number;
 
-  @IsNotEmpty({ message: "Image URL cannot be empty" })
+  @IsNotEmpty({ message: "Image cannot be empty" })
   @IsUrl({}, { message: "Image must be a valid URL" })
   image: string;
 
+  @IsNotEmpty({ message: "Quantity cannot be empty" })
   @IsNumber()
   @Min(1, { message: "Quantity must be greater than or equal to 1" })
   quantity: number;
