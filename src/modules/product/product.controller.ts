@@ -6,7 +6,6 @@ import { threadId } from 'worker_threads';
 
 @Controller('product')
 export class ProductController {
-  // injecao de dependencia
   constructor(private readonly productService: ProductService) {}
 
   @Post()
