@@ -13,7 +13,7 @@ export class ProductDTO {
 
   @IsNotEmpty({ message: "Price cannot be empty" })
   @IsNumber({}, { message: "Price must be a number" })
-  @Min(1, { message: "Id must be greater than or equal to 1" })
+  @Min(1, { message: "Price must be greater than or equal to 1" })
   price: number;
 
   @IsNotEmpty({ message: "Image cannot be empty" })
