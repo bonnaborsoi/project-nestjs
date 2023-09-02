@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PurchaseDTO } from './dto/purchase.dto'
 import { PrismaService } from 'src/database/PrismaService';
-import { validate } from 'class-validator';
 
 @Injectable()
 export class PurchaseService {
