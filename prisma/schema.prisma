@@ -32,6 +32,7 @@ model PurchasedProduct {
   @@map("PurchasedProducts")
 }
 
+// This Purchases Table is for future implementation, it would be used to store the purchases in the database
 model Purchase {
   id String @id @default(uuid())
   purchasedProducts PurchasedProduct[]
