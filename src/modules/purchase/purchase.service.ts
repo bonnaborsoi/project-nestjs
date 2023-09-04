@@ -7,16 +7,6 @@ export class PurchaseService {
 
     constructor(private prisma : PrismaService) {}
 
-    async processPurchase(purchaseData: PurchaseDTO[]) {
-        for (const purchase of purchaseData) {
-            await this.updateProductStock(purchase.productId, purchase.quantity);
-        }
-
-        return {
-            message: 'Purchase completed successfully!'
-        }
-    }
-
     // Exception handler
     async checkProductExistence(id: number) {
         const product = await this.prisma.product.findUnique({
@@ -30,9 +20,27 @@ export class PurchaseService {
         return product;
     }
 
+    async processPurchase(purchaseData: PurchaseDTO[]) {
+
+        for (const purchase of purchaseData) {
+            await this.checkProductExistence(purchase.productId); // Check if any products of the list does not exist
+        }
+        for (const purchase of purchaseData) {
+            await this.updateProductStock(purchase.productId, purchase.quantity); 
+        }
+
+        return {
+            message: 'Purchase completed successfully!'
+        }
+    }
+
     async updateProductStock(productId: number, purchasedQuantity: number) {
-        const product = await this.checkProductExistence(productId);
-      
+        const product = await this.prisma.product.findUnique({
+            where: {
+                id : productId,
+            },
+        });
+        
         if (product) {
             const updatedQuantity = product.quantity - purchasedQuantity;
 
