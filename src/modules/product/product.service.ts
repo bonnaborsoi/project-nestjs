@@ -7,7 +7,7 @@ export class ProductService {
     
     constructor(private prisma : PrismaService) {}
 
-    // helper function
+    // Exception handler
     async checkProductExistence(id: number) {
         const product = await this.prisma.product.findUnique({
             where: {
