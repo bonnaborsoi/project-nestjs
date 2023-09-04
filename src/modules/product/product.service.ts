@@ -23,14 +23,13 @@ export class ProductService {
     }
 
     async create(data: ProductDTO) {
-
         const productExists = await this.prisma.product.findFirst({
             where: {
                 id: data.id,
             },
         });
         if (productExists){
-            throw new Error("Product already exists");
+            throw new Error("This id already exists");
         }
 
         const product = await this.prisma.product.create({
@@ -46,7 +45,6 @@ export class ProductService {
     }
 
     async findOne(id: number) {
-
         const product = await this.checkProductExistence(id);
 
         return await this.prisma.product.findUnique({
@@ -56,8 +54,7 @@ export class ProductService {
         });
     }
       
-
-      async update (id: number, data: ProductDTO){
+    async update (id: number, data: ProductDTO){
         const product = await this.checkProductExistence(id);
 
         return await this.prisma.product.update({
@@ -80,5 +77,5 @@ export class ProductService {
         return {
             message: 'Product deleted'
         }
-      }
+    }
 }
