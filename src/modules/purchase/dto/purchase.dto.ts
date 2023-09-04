@@ -7,7 +7,7 @@ export class PurchaseDTO {
   @Min(0, { message: "Id must be greater than or equal to 0" })
   productId: number;
 
-  purchaseId?: string;
+  // purchaseId?: string;
 
   @IsNotEmpty({ message: 'Quantity cannot be empty' })
   @IsNumber()
