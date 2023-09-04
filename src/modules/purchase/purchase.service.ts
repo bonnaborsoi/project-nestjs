@@ -36,10 +36,6 @@ export class PurchaseService {
         if (product) {
             const updatedQuantity = product.quantity - purchasedQuantity;
 
-            // delete this condition
-            if (purchasedQuantity <= 0){
-                throw new Error("You cannot enter a non positive number: " + purchasedQuantity + " (productId: " + productId + ")");
-            }
             
             if (product.quantity == 0){
                 throw new Error("Product out of stock");
